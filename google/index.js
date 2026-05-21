@@ -1,13 +1,20 @@
+const mapElement = document.querySelector("gmp-map");
+
 async function init() {
-  // Import the needed libraries.
-  await google.maps.importLibrary("maps");
+  // Request needed libraries.
+  const [{ AdvancedMarkerElement }] = await Promise.all([
+    google.maps.importLibrary("marker"),
+    google.maps.importLibrary("maps"),
+  ]);
 
-  // Access the map.
-  const mapElement = document.querySelector("gmp-map");
-  // Access the underlying map object.
-  const innerMap = mapElement.innerMap;
+  const priceTag = document.createElement("div");
+  priceTag.className = "price-tag";
+  priceTag.textContent = "$2.5M";
 
-  console.log({ mapElement, innerMap });
+  const marker = new AdvancedMarkerElement({
+    position: { lat: 37.5665851, lng: 126.9782038 },
+  });
+  marker.append(priceTag);
+  mapElement.append(marker);
 }
-
 void init();
